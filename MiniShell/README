@@ -1,0 +1,8 @@
+Project name: Mini Shell
+Author: Seongmin Jeong
+
+Goals
+1. make own prompt program. (Do not use '$' or '#' as prompt name)
+2. addition operation: background running(&), redirection(<,>,2>), pipelining(|)
+3. if user wants exit, type 'goodbye'.
+
