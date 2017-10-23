@@ -39,38 +39,29 @@ int main(int argc, char **argv)
 		}
 		
 		/* parsing command */
-		printf("input: %s\n", inputLine);
 		token = strtok(inputLine, SEPARATOR);
-		for(i = 0; i < MAX_ARG; ++i) {
+		for(i = 0; (token != NULL && i < MAX_ARG); ++i) {
 			strcpy(parse[i], token);
 			token = strtok(NULL, SEPARATOR);
 		}
 		arg_num = i;
-		for(i = 0; i < arg_num; ++i)
-			printf("%s\n", parse[i]);
-	}
-
-	exit(0);
-
-	strcpy(parse[0], "ls");
-	strcpy(parse[1], "-l");
-	strcpy(parse[2], "-a");
-	arg_num = 3;
-
-	if (pid = fork()) { /* parent */
-		waitpid(pid, &status, 0);
-		printf("Program is normally completed.\n");
-	}
-	else { /* child */
-		char cmd[MAX_LENGTH+4] = PREFIX;
-
-		for (i = 0; i < arg_num; ++i)
-			arg[i] = parse[i];
-		arg[i] = (char*)0;
 		
-		strcat(cmd, arg[0]);
-		printf("Child's cmd: %s\n", cmd);
-		execl(cmd, arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7]);
+		/* execute command */
+		if (pid = fork()) { /* parent */
+			waitpid(pid, &status, 0);
+			// printf("Program is normally completed.\n");
+		}
+		else { /* child */
+			char cmd[MAX_LENGTH+4] = PREFIX;
+
+			for (i = 0; i < arg_num; ++i)
+				arg[i] = parse[i];
+			arg[i] = (char*)0;
+		
+			strcat(cmd, arg[0]);
+			// printf("Child's cmd: %s\n", cmd);
+			execl(cmd, arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7]);
+		}
 	}
 
 	exit(0);
